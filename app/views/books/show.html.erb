@@ -1,0 +1,40 @@
+<% flash.each do |message_type, message| %>
+  <div><%= message %></div>
+<% end %>
+
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<script src="https://kit.fontawesome.com/3cec55645f.js" crossorigin="anonymous"></script>
+<div class="container">
+<div class="row">
+
+<div class="col-md-3">
+<%= render 'list_show', book: @book, user: @books.user %>
+</div>
+
+    <div class="col-md-8  offset-md-1">
+      <h1 class="mt-3">Book detail</h1>
+      <table class="table table">
+
+        <tbody>
+            <tr>
+              <td><%= image_tag @books.user.get_profile_image %><br><%= link_to @books.user.name, user_path(@books.user.id) %></td>
+              <td><%= link_to @books.title, book_path(@books.id) %></td>
+              <td><%= @books.body %></td>
+              <% if @books.user == current_user %>
+                <td><%= link_to "Edit", edit_book_path(@books.id), class:"btn btn-success" %></td>
+                <td><%= link_to "Destroy", book_path(@books.id), method: :delete, class:"btn btn-danger" %></td>
+              <% end %>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
